@@ -1,0 +1,62 @@
+f = open("cuburi.txt")
+# n = f.readline()
+# l = f.read().split()
+# f.close()
+# print(l)
+
+# cuburi = [(int(l[i]), l[i+1]) for i in range(0, len(l), 2)]
+# print(cuburi)
+
+n = int(f.readline())
+
+listacuburi = []
+for i in range (n):
+    tupluintermediar = f.readline().split()
+    listacuburi.append((int(tupluintermediar[0]), tupluintermediar[1]))
+    
+listacuburi.sort(reverse = True)
+
+f.close()
+suma = 0
+culoareacum = ""
+r = open("turn.txt", "a")
+for cub in listacuburi:
+    if culoareacum != cub[1]:
+        culoareacum = cub[1]
+        r.write(str(cub[0]) + ' ' + cub[1] + '\n')
+        suma += cub[0]
+r.write("Inaltime totala: " + str(suma))
+r.close()
+
+
+
+
+f = open("bani.txt", "r")
+
+bancnote = [int(i) for i in f.readline().split()]
+bancnote.sort(reverse = True)
+suma = int(f.readline())
+f.close()
+
+nrbancnote = 0
+afisare1 = f"{suma} = "
+afisaretotala = []
+afisaretotala.append(afisare1)
+for i in bancnote:
+    if suma - i >= 0:
+        afisareinterm1 = f"{i}*"
+        nrbancnote = 0
+        while suma - i >= 0:
+            suma -= i
+            nrbancnote += 1
+        if i != 1:    
+            afisareinterm2 = f"{nrbancnote} + "
+        else:
+            afisareinterm2 = str(nrbancnote)
+        afisaretotala.extend((afisareinterm1, afisareinterm2)) 
+
+afisfinala = "".join(afisaretotala)
+
+r = open("plata.txt", "w")
+r.write(afisfinala)
+r.close()
